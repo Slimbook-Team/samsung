@@ -14,4 +14,5 @@ bash samsung_firmware_update_linux.sh`
 
 - After that we will have to restart the computer and we should have updated the FW.
 
-( You can chek firmware version with this comand: sudo smartctl --xall /dev/nvme0n1 | grep -i firmware )
+PS: You can chek firmware version with this comand: 
+sudo smartctl --xall /dev/nvme0n1 | grep -i firmware
