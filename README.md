@@ -23,4 +23,8 @@ PS: You can chek firmware version with this comand:
 
 sudo smartctl --xall /dev/nvme0n1 | grep -i firmware
 
+or
+
+sudo fwupdmgr get-devices
+
 for more info, check the sh file of this repo
