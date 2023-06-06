@@ -100,7 +100,7 @@ while IFS= read -r linea; do
 done <<< "$discos"
 
 # Solicitar confirmación al usuario
-echo "Encima de esta frase, hay una lista de discos duros detectados en tu ordenador. Memoriza el modelo, si es un Samsung será algo como 'SSD 980 EVO 2TB' u otro similar. Es muy importante que lo recuerdes porque más abajo deberás seleccionar ÚNICAMENTE EL FICHERO CORRECTO, o podrías estropear tu disco duro para siempre."
+echo "Encima de esta frase, hay una lista de discos duros detectados en tu ordenador. Memoriza el modelo, si es un Samsung será algo como 'Samsung SSD 980 EVO 2TB' u otro similar. Es muy importante que lo recuerdes porque más abajo deberás seleccionar ÚNICAMENTE EL FICHERO CORRECTO, o podrías estropear tu disco duro para siempre."
 
 while true; do
   read -p "¿Has memorizado el modelo de tu disco duro correctamente? (s/n): " respuesta
