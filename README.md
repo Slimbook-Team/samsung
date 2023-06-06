@@ -13,9 +13,11 @@ bash samsung_firmware_update_linux.sh
 
 - You will have to answer several questions, and before finishing, one will open in which we are going to follow the indicated steps.
 
+![Screenshot1](https://raw.githubusercontent.com/Slimbook-Team/samsung/main/image1.png)
+
 - After that we will have to restart the computer and we should have updated the FW.
 
-![Screenshot](https://raw.githubusercontent.com/Slimbook-Team/samsung/main/image.png)
+![Screenshot2](https://raw.githubusercontent.com/Slimbook-Team/samsung/main/image2.png)
 
 
 PS: You can chek firmware version with this comand: 
