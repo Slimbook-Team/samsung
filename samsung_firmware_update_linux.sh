@@ -12,19 +12,20 @@
 
 
 # Aviso de versión beta y recomendación de hacer una copia de seguridad
-echo "¡Aviso! Este script es una versión beta con un método que SAMSUNG no garantiza. Se recomienda hacer una copia de seguridad antes de continuar."
+echo "This is a beta and unofficial Samsung script, we recommend to make a backup before continuing."
+
 
 # Solicitar confirmación al usuario
 while true; do
-  read -p "¿Has entendido el aviso y has hecho una copia de seguridad? (s/n): " respuesta
+  read -p "Have you understood the warning and made a backup copy? Please answer 'Y' for yes or 'N' for no. " respuesta
   case $respuesta in
-    [Ss]* )
+    [Yy]* )
       break;;
     [Nn]* )
-      echo "Por favor, haz una copia de seguridad antes de ejecutar este script."
+      echo "Please, make a backup before running this script."
       exit;;
     * )
-      echo "Por favor, responde 's' para sí o 'n' para no.";;
+      echo "Please answer 'Y' for yes or 'N' for no.";;
   esac
 done
 
@@ -37,7 +38,7 @@ elif command -v pacman &> /dev/null; then
 elif command -v dnf &> /dev/null; then
   distro="dnf"
 else
-  echo "No se pudo determinar la distribución de Linux compatible (apt, pacman o dnf)."
+  echo "The supported Linux distribution (apt, pacman or dnf) could not be determined."
   exit 1
 fi
 
@@ -52,27 +53,27 @@ for programa in "${programas[@]}"; do
 done
 
 if [ ${#paquetes_faltantes[@]} -gt 0 ]; then
-  echo "Los siguientes paquetes son necesarios pero no están instalados: ${paquetes_faltantes[*]}"
+  echo "The following packages are required but they are not installed: ${paquetes_faltantes[*]}"
 
   if [ "$distro" = "apt" ]; then
-    echo "Instalando paquetes faltantes con apt..."
+    echo "Installing missing packages with apt..."
     sudo apt-get update
     sudo apt-get install -y "${paquetes_faltantes[@]}"
-    echo "Paquetes instalados correctamente."
+    echo "Packages installed correctly."
   elif [ "$distro" = "pacman" ]; then
-    echo "Instalando paquetes faltantes con pacman..."
+    echo "Installing missing packages with pacman..."
     sudo pacman -Sy --noconfirm "${paquetes_faltantes[@]}"
-    echo "Paquetes instalados correctamente."
+    echo "Packages installed correctly."
   elif [ "$distro" = "dnf" ]; then
-    echo "Instalando paquetes faltantes con dnf..."
+    echo "Installing missing packages with dnf..."
     sudo dnf install -y "${paquetes_faltantes[@]}"
-    echo "Paquetes instalados correctamente."
+    echo "Packages installed correctly."
   fi
 fi
 
 directorio="/tmp/samsung"
 mkdir -p "$directorio"
-echo "Se ha creado el subdirectorio 'samsung' en /tmp"
+echo "The 'samsung' subdirectory has been created in /tmp"
 
 repositorio="https://github.com/Slimbook-Team/samsung"
 git clone "$repositorio" "$directorio"
@@ -83,37 +84,37 @@ discos=$(lsblk -o NAME,MODEL -n -l -d | grep -Ev "loop|^sd")
 
 # Verificar si existen discos duros
 if [[ -z "$discos" ]]; then
-  echo "No se encontraron discos duros en el sistema."
+  echo "No hard disks were found in the system."
   exit 0
 fi
 
 # Mostrar el modelo de cada disco duro
-echo "Modelo de los discos duros en el sistema:"
+echo "Samsung SSD model in the system"
 echo
 
 while IFS= read -r linea; do
   nombre=$(echo "$linea" | awk '{print $1}')
   modelo=$(echo "$linea" | awk '{$1=""; print $0}')
 
-  echo "Disco: $nombre"
-  echo "Modelo: $modelo"
+  echo "SSD: $nombre"
+  echo "Model: $modelo"
   echo
 done <<< "$discos"
 
 # Solicitar confirmación al usuario
-echo "Encima de esta frase, hay una lista de discos duros detectados en tu ordenador. Memoriza el modelo, si es un Samsung será algo como 'Samsung SSD 980 PRO' u otro similar, sin la capacidad, pero si algo numerico como 960 o 970 o 980 y EVO o PRO o nada. "
-echo "Es muy importante que lo recuerdes porque más abajo deberás seleccionar ÚNICAMENTE EL FICHERO CORRECTO, o podrías estropear tu disco duro para siempre."
+echo "(IMPORTANT) Above this sentence, there is a list of hard drives detected in your computer. Memorize the exact model, it should be Samsung and after the model could be PRO/EVO/EVO_Plus or nothing at all. Flash only the exact model."
+echo "Be aware, it is very important to remember this because below you will have to select ONLY THE CORRECT FILE, or you could ruin your hard disk forever."
 
 while true; do
-  read -p "¿Has memorizado el modelo de tu disco duro correctamente? (s/n): " respuesta
+  read -p "Have you memorized the model of your hard disk correctly? Please answer 'Y' for yes or 'N' for no." respuesta
   case $respuesta in
-    [Ss]* )
+    [Yy]* )
       break;;
     [Nn]* )
-      echo "Por favor, memoriza el modelo de tu disco duro antes de continuar."
+      echo "Please memorize the model of your hard disk before proceeding."
       exit;;
     * )
-      echo "Por favor, responde 's' para sí o 'n' para no.";;
+      echo "Please answer 'Y' for yes or 'N' for no.";;
   esac
 done
 
@@ -123,19 +124,19 @@ while IFS= read -r -d '' archivo; do
   archivos+=("$archivo")
 done < <(find "$directorio/firmware" -maxdepth 1 -type f -print0)
 
-echo "Elige un archivo :"
+echo "Choose a file :"
 for i in "${!archivos[@]}"; do
   echo "$((i+1)). ${archivos[$i]}"
 done
 
-echo "Arriba tienes una lista de archivos de firmware en lineas que empiezan por un número, escribe el numero que se llama como tu disco duro con guines bajos. "
-echo "Por ejemplo para un si tienes uns Samsung SSD 840 EVO, marca el número 1. "
-read -p "Si tu disco duro no aparece en la lista es que Samsung no ha publicado el firmware, por que quizás no tenga el problema. Indica el número de tu disco o pulsa Control+C: " opcion
+echo "Above you have a list of firmware files in lines starting with a number, type the number that is called like your hard disk with low dashes. "
+echo "For example, if you have a Samsung SSD 840 EVO, dial number 1. "
+read -p "If your hard disk does not appear in the list, Samsung has not released the firmware, so it may not have the problem. Enter your disk number or press Control+C: " opcion
 
 # aplicar cambios
 if [[ $opcion =~ ^[0-9]+$ && $opcion -gt 0 && $opcion -le ${#archivos[@]} ]]; then
   archivo_elegido="${archivos[$opcion-1]}"
-  echo "Has elegido el archivo: $archivo_elegido"
+  echo "You have chosen the file: $archivo_elegido"
 
   # Montar archivo elegido y ejecutar comandos adicionales
   sudo mkdir /mnt/iso
@@ -146,4 +147,4 @@ if [[ $opcion =~ ^[0-9]+$ && $opcion -gt 0 && $opcion -le ${#archivos[@]} ]]; th
   cd root/fumagician/
   sudo ./fumagician
 fi
-echo "El proceso ha finalizado, el programa te habrá indicado si ha temrinado con éxito, en tal caso, reinicia el ordenador para aolicar los cambios."
+echo "The process has finished, the program will have indicated if it has finished successfully, if so, restart the computer to apply the changes."
