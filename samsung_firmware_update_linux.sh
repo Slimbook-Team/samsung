@@ -74,7 +74,7 @@ mkdir -p "$directorio"
 echo "Se ha creado el subdirectorio 'samsung' en /tmp"
 
 repositorio="https://github.com/Slimbook-Team/samsung"
-git clone "$repositorio" "$directorio/firmware"
+git clone "$repositorio" "$directorio"
 
 # Leer directorio y guardar en un array
 archivos=()
