@@ -100,7 +100,8 @@ while IFS= read -r linea; do
 done <<< "$discos"
 
 # Solicitar confirmación al usuario
-echo "Encima de esta frase, hay una lista de discos duros detectados en tu ordenador. Memoriza el modelo, si es un Samsung será algo como 'Samsung SSD 980 PRO 1TB' u otro similar. Es muy importante que lo recuerdes porque más abajo deberás seleccionar ÚNICAMENTE EL FICHERO CORRECTO, o podrías estropear tu disco duro para siempre."
+echo "Encima de esta frase, hay una lista de discos duros detectados en tu ordenador. Memoriza el modelo, si es un Samsung será algo como 'Samsung SSD 980 PRO' u otro similar, sin la capacidad, pero si algo numerico como 960 o 970 o 980 y EVO o PRO o nada. "
+echo "Es muy importante que lo recuerdes porque más abajo deberás seleccionar ÚNICAMENTE EL FICHERO CORRECTO, o podrías estropear tu disco duro para siempre."
 
 while true; do
   read -p "¿Has memorizado el modelo de tu disco duro correctamente? (s/n): " respuesta
@@ -125,7 +126,10 @@ echo "Elige un archivo :"
 for i in "${!archivos[@]}"; do
   echo "$((i+1)). ${archivos[$i]}"
 done
-read -p "Arriba tienes una lista de archivos de firmware en lineas que empiezan por un número, escribe el numero que se llama como tu disco duro con guines bajos. Por ejemplo para un si tienes uns Samsung SSD 840 EVO, marca el número 1. \n Si tu disco duro no aparece en la lista es que Samsung no ha publicado el firmware, por que quizás no tenga el problema. Indica el número de tu disco o pulsa Control+C: " opcion
+
+echo "Arriba tienes una lista de archivos de firmware en lineas que empiezan por un número, escribe el numero que se llama como tu disco duro con guines bajos. "
+echo "Por ejemplo para un si tienes uns Samsung SSD 840 EVO, marca el número 1. "
+read -p "Si tu disco duro no aparece en la lista es que Samsung no ha publicado el firmware, por que quizás no tenga el problema. Indica el número de tu disco o pulsa Control+C: " opcion
 
 # aplicar cambios
 if [[ $opcion =~ ^[0-9]+$ && $opcion -gt 0 && $opcion -le ${#archivos[@]} ]]; then
@@ -141,4 +145,4 @@ if [[ $opcion =~ ^[0-9]+$ && $opcion -gt 0 && $opcion -le ${#archivos[@]} ]]; th
   cd root/fumagician/
   sudo ./fumagician
 fi
-echo "El proceso ha finalizado, el programa te habrá indicado si ha temrinado con éxito, en tal caso, reinicia."
+echo "El proceso ha finalizado, el programa te habrá indicado si ha temrinado con éxito, en tal caso, reinicia el ordenador para aolicar los cambios."
