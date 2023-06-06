@@ -125,7 +125,7 @@ echo "Elige un archivo :"
 for i in "${!archivos[@]}"; do
   echo "$((i+1)). ${archivos[$i]}"
 done
-read -p "Arriba tienes una lista de archivos de firmware en lineas que empiezan por un número, escribe el numero que se llama como tu disco duro con guines bajos. Por ejemplo para un si tienes uns Samsung SSD 840 EVO, marca el número 1: " opcion
+read -p "Arriba tienes una lista de archivos de firmware en lineas que empiezan por un número, escribe el numero que se llama como tu disco duro con guines bajos. Por ejemplo para un si tienes uns Samsung SSD 840 EVO, marca el número 1. \n Si tu disco duro no aparece en la lista es que Samsung no ha publicado el firmware, por que quizás no tenga el problema. Indica el número de tu disco o pulsa Control+C: " opcion
 
 # aplicar cambios
 if [[ $opcion =~ ^[0-9]+$ && $opcion -gt 0 && $opcion -le ${#archivos[@]} ]]; then
