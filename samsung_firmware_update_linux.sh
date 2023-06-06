@@ -76,7 +76,46 @@ echo "Se ha creado el subdirectorio 'samsung' en /tmp"
 repositorio="https://github.com/Slimbook-Team/samsung"
 git clone "$repositorio" "$directorio"
 
-# Leer directorio y guardar en un array
+
+# Obtener la lista de discos duros excluyendo los loop y los que comienzan con "sd"
+discos=$(lsblk -o NAME,MODEL -n -l -d | grep -Ev "loop|^sd")
+
+# Verificar si existen discos duros
+if [[ -z "$discos" ]]; then
+  echo "No se encontraron discos duros en el sistema."
+  exit 0
+fi
+
+# Mostrar el modelo de cada disco duro
+echo "Modelo de los discos duros en el sistema:"
+echo
+
+while IFS= read -r linea; do
+  nombre=$(echo "$linea" | awk '{print $1}')
+  modelo=$(echo "$linea" | awk '{$1=""; print $0}')
+
+  echo "Disco: $nombre"
+  echo "Modelo: $modelo"
+  echo
+done <<< "$discos"
+
+# Solicitar confirmación al usuario
+echo "Encima de esta frase, hay una lista de discos duros detectados en tu ordenador. Memoriza el modelo, si es un Samsung será algo como 'SSD 980 EVO 2TB' u otro similar. Es muy importante que lo recuerdes porque más abajo deberás seleccionar ÚNICAMENTE EL FICHERO CORRECTO, o podrías estropear tu disco duro para siempre."
+
+while true; do
+  read -p "¿Has memorizado el modelo de tu disco duro correctamente? (s/n): " respuesta
+  case $respuesta in
+    [Ss]* )
+      break;;
+    [Nn]* )
+      echo "Por favor, memoriza el modelo de tu disco duro antes de continuar."
+      exit;;
+    * )
+      echo "Por favor, responde 's' para sí o 'n' para no.";;
+  esac
+done
+
+# Leer directorio del firmware y guardar en un array
 archivos=()
 while IFS= read -r -d '' archivo; do
   archivos+=("$archivo")
