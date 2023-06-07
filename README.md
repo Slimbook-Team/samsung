@@ -28,3 +28,5 @@ or
 sudo fwupdmgr get-devices
 
 for more info, check the sh file of this repo
+
+**NOTE: If, during the execution, and despite selecting the correct version, you see a message that says "No supported SSD detected for Firmware Update!!!", it may be that your disk is not compatible with the update because it is not affected by the issue. For example, the 970 EVP Plus with firmware 2B2QEXM7 does not allow you to upgrade, and that is correct, that version does not have any issues. However, if you have version 3B2QEXM7, it will require an update to version 4B2QEXM7.** 
